@@ -1,8 +1,8 @@
 package com.CeramiqueRachid.config;
 
 
-import com.getInspired.service.UserService;
-import com.getInspired.util.JwtUtil;
+import com.CeramiqueRachid.service.AdminService;
+import com.CeramiqueRachid.util.JwtUtil;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -26,7 +26,7 @@ public class JwtRequestFilter extends OncePerRequestFilter {
     @Autowired
     private JwtUtil jwtUtil;
     @Autowired
-    private UserService userService;
+    private AdminService userService;
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {

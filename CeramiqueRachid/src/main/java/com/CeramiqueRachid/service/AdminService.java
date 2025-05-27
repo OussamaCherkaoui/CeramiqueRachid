@@ -9,6 +9,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -23,6 +24,18 @@ public class AdminService implements UserDetailsService {
         return adminRepository.save(admin);
     }
 
+    public Boolean deleteAdmin(Long id) {
+        Optional<Admin> admin = adminRepository.findById(id);
+        if (admin.isPresent()) {
+            adminRepository.delete(admin.get());
+            return true;
+        }
+        return false;
+    }
+
+    public List<Admin> getAllAdmins() {
+        return adminRepository.findAll();
+    }
 
 
     public Admin getUserByUsername(String username) {
