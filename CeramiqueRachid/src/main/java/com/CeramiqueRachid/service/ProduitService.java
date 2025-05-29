@@ -27,6 +27,14 @@ public class ProduitService {
         return produits;
     }
 
+    public List<Produit> getAllProduitsByCategorieId(Long id) throws CategorieNotFoundException {
+        List<Produit> produits = produitRepository.findAllByCategorie_IdOrderByNomDesc(id);
+        if (produits.isEmpty()) {
+            throw new DatabaseEmptyException();
+        }
+        return produits;
+    }
+
     public Produit saveProduit(Produit produit) {
         return produitRepository.save(produit);
     }
@@ -41,4 +49,19 @@ public class ProduitService {
         return produit;
     }
 
+    public List<Produit> getAllProduitsByCategorieName(String name) {
+        List<Produit> produits = produitRepository.findAllByCategorie_NomOrderByNomDesc(name);
+        if (produits.isEmpty()) {
+            throw new DatabaseEmptyException();
+        }
+        return produits;
+    }
+
+    public List<Produit> getAllProductNearingTheEnd() {
+        List<Produit> produits = produitRepository.findAllByQuantiteLessThan(6L);
+        if (produits.isEmpty()) {
+            throw new DatabaseEmptyException();
+        }
+        return produits;
+    }
 }

@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
@@ -47,6 +48,15 @@ public class MessageService {
         }
         return messages;
     }
+
+    public List<Message> getAllMessageByDate(LocalDate date) {
+        List<Message> messages = messageRepository.findAllByDateEnvoi(date);
+        if (messages.isEmpty()) {
+            throw new DatabaseEmptyException();
+        }
+        return messages;
+    }
+
     public List<Message> getAllMessageReply() {
         List<Message> messages = messageRepository.findAllByEstRepondueIsTrueOrderByDateEnvoiDesc();
         if (messages.isEmpty()) {
@@ -64,4 +74,7 @@ public class MessageService {
     }
 
 
+    public Long countMessageNotReply() {
+        return messageRepository.countMessageByEstRepondueIsFalse();
+    }
 }

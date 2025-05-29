@@ -39,4 +39,6 @@ public class CategorieService {
         categorieRepository.delete(categorie);
         return categorie;
     }
+
+
 }

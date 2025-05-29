@@ -62,4 +62,9 @@ public class AdminService implements UserDetailsService {
         }
         return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(), user.getAuthorities());
     }
+
+
+    public Long getCountAdminRegistred() {
+        return adminRepository.count();
+    }
 }

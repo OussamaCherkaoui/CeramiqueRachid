@@ -12,6 +12,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Service
@@ -45,4 +46,34 @@ public class CommandeService {
         return commande;
     }
 
+    public Long getCountOrderDay() {
+        return commandeRepository.countCommandeByDateCommande(LocalDate.now());
+    }
+
+    public List<Commande> getAllCommandesByDate(LocalDate date) {
+        List<Commande> commandes = commandeRepository.findAllByDateCommande();
+        if (commandes.isEmpty()) {
+            throw new DatabaseEmptyException();
+        }
+        return commandes;
+    }
+
+    public List<Commande> getAllCommandesByStatut(Boolean statut) {
+        List<Commande> commandes;
+        if (statut) {
+            commandes = commandeRepository.findAllByStatutIsTrueOrderByDateCommandeDesc();
+        }
+        else{
+            commandes = commandeRepository.findAllByStatutIsFalseOrderByDateCommandeDesc();
+        }
+
+        if (commandes.isEmpty()) {
+            throw new DatabaseEmptyException();
+        }
+        return commandes;
+    }
+
+    public Commande getCommandeById(Long id) {
+        return commandeRepository.findById(id).orElseThrow(CommandeNotFoundException::new);
+    }
 }
