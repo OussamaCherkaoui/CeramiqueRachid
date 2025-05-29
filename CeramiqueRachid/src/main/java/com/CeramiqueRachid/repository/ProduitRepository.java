@@ -11,4 +11,9 @@ import java.util.List;
 @Repository
 public interface ProduitRepository extends JpaRepository<Produit, Long> {
     List<Produit> findAllByOrderByNomDesc();
+
+    List<Produit> findAllByCategorie_IdOrderByNomDesc(Long id);
+    List<Produit> findAllByCategorie_NomOrderByNomDesc(String name);
+
+    List<Produit> findAllByQuantiteLessThan(Long number);
 }
