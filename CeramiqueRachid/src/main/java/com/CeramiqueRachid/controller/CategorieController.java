@@ -32,6 +32,8 @@ public class CategorieController {
 
 
 
+
+
     @PostMapping("/save")
     public ResponseEntity<?> save(@RequestBody Categorie categorie ){
         return ResponseEntity.status(HttpStatus.CREATED).body(categorieService.saveCategorie(categorie));
@@ -50,4 +52,6 @@ public class CategorieController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         }
     }
+
+
 }

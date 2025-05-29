@@ -11,6 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @RestController
@@ -51,4 +52,40 @@ public class CommandeController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         }
     }
+
+    @GetMapping("/countOrderDay")
+    public ResponseEntity<?> countOrderDay() {
+        return new ResponseEntity<>(commandeService.getCountOrderDay(), HttpStatus.OK);
+    }
+
+    @GetMapping("/getById/{id}")
+    public ResponseEntity<?> getCommandeById(@PathVariable Long id){
+        try {
+            Commande commande = commandeService.getCommandeById(id);
+            return ResponseEntity.ok(commande);
+        } catch (DatabaseEmptyException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        }
+    }
+
+    @GetMapping("/getAllByDate/{date}")
+    public ResponseEntity<?> getAllByDate(@PathVariable LocalDate date) {
+        try {
+            List<Commande> commandes = commandeService.getAllCommandesByDate(date);
+            return ResponseEntity.ok(commandes);
+        } catch (DatabaseEmptyException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        }
+    }
+
+    @GetMapping("/getAllByStatut/{statut}")
+    public ResponseEntity<?> getAllByStatut(@PathVariable Boolean statut) {
+        try {
+            List<Commande> commandes = commandeService.getAllCommandesByStatut(statut);
+            return ResponseEntity.ok(commandes);
+        } catch (DatabaseEmptyException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        }
+    }
+
 }

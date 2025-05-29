@@ -2,6 +2,7 @@ package com.CeramiqueRachid.controller;
 
 import com.CeramiqueRachid.exception.CategorieNotFoundException;
 import com.CeramiqueRachid.exception.DatabaseEmptyException;
+import com.CeramiqueRachid.model.Categorie;
 import com.CeramiqueRachid.model.Commande;
 import com.CeramiqueRachid.model.Produit;
 import com.CeramiqueRachid.service.CommandeService;
@@ -31,6 +32,26 @@ public class ProduitController {
         }
     }
 
+    @GetMapping("/getAll/{id]")
+    public ResponseEntity<?> getAllByCategorieId(@PathVariable("id") Long id) {
+        try {
+            List<Produit> produits = produitService.getAllProduitsByCategorieId(id);
+            return ResponseEntity.ok(produits);
+        } catch (DatabaseEmptyException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        }
+    }
+
+    @GetMapping("/getAll/{name]")
+    public ResponseEntity<?> getAllByCategorieNom(@PathVariable("name") String name) {
+        try {
+            List<Produit> produits = produitService.getAllProduitsByCategorieName(name);
+            return ResponseEntity.ok(produits);
+        } catch (DatabaseEmptyException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        }
+    }
+
 
 
     @PostMapping("/save")
@@ -48,6 +69,16 @@ public class ProduitController {
             Produit deleteProduit = produitService.deleteProduit(id);
             return ResponseEntity.status(HttpStatus.ACCEPTED).body(deleteProduit);
         } catch (CategorieNotFoundException e){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        }
+    }
+
+    @GetMapping("/getAllProductNearingTheEnd")
+    public ResponseEntity<?> getAllProductNearingTheEnd() {
+        try {
+            List<Produit> produits = produitService.getAllProductNearingTheEnd();
+            return ResponseEntity.ok(produits);
+        } catch (DatabaseEmptyException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         }
     }

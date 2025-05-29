@@ -85,4 +85,9 @@ public class AdminController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         }
     }
+
+    @GetMapping("/countRegistredAdmin")
+    public ResponseEntity<?> countRegistredAdmin() {
+        return new ResponseEntity<>(adminService.getCountAdminRegistred(), HttpStatus.OK);
+    }
 }

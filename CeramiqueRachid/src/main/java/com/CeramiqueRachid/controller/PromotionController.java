@@ -51,4 +51,20 @@ public class PromotionController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         }
     }
+
+    @GetMapping("/getAll/{name]")
+    public ResponseEntity<?> getAllByProductName(@PathVariable("name") String name) {
+        try {
+            List<Promotion> promotions = promotionService.getAllPromotionsByProductName(name);
+            return ResponseEntity.ok(promotions);
+        } catch (DatabaseEmptyException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        }
+    }
+
+    @GetMapping("/countPromotionActive")
+    public ResponseEntity<?> countPromotionActive() {
+        return new ResponseEntity<>(promotionService.countPromotionActive(), HttpStatus.OK);
+    }
+
 }
