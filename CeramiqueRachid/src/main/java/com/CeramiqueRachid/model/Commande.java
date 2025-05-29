@@ -24,9 +24,7 @@ public class Commande {
     @Column
     private Double total;
     @Column
-    private String statut;
-    @Column
-    private Long adminId;
+    private Boolean statut;
     @ManyToOne
     @JoinColumn(name = "idAdmin")
     private Admin admin;
