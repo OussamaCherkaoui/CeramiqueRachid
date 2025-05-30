@@ -53,7 +53,7 @@ public class CommandeProduitController {
         }
     }
 
-    @DeleteMapping("/delete/{id}")
+    @DeleteMapping("/deleteAllByCommandeId/{id}")
     public ResponseEntity<?> deleteAllByCommandeId(@PathVariable("id") Long id) {
         try {
             Commande commande = commandeProduitService.deleteAllCommandeProduitByIdCommande(id);

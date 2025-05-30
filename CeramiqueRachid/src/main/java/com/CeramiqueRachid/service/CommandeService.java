@@ -51,7 +51,7 @@ public class CommandeService {
     }
 
     public List<Commande> getAllCommandesByDate(LocalDate date) {
-        List<Commande> commandes = commandeRepository.findAllByDateCommande();
+        List<Commande> commandes = commandeRepository.findAllByDateCommande(date);
         if (commandes.isEmpty()) {
             throw new DatabaseEmptyException();
         }

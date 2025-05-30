@@ -32,7 +32,7 @@ public class ProduitController {
         }
     }
 
-    @GetMapping("/getAll/{id]")
+    @GetMapping("/getAllByCategorieId/{id}")
     public ResponseEntity<?> getAllByCategorieId(@PathVariable("id") Long id) {
         try {
             List<Produit> produits = produitService.getAllProduitsByCategorieId(id);
@@ -42,8 +42,8 @@ public class ProduitController {
         }
     }
 
-    @GetMapping("/getAll/{name]")
-    public ResponseEntity<?> getAllByCategorieNom(@PathVariable("name") String name) {
+    @GetMapping("/getAllByCategorieName/{name}")
+    public ResponseEntity<?> getAllByCategorieName(@PathVariable("name") String name) {
         try {
             List<Produit> produits = produitService.getAllProduitsByCategorieName(name);
             return ResponseEntity.ok(produits);

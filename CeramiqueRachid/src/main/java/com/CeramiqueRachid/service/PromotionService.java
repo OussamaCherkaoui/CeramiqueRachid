@@ -22,7 +22,7 @@ public class PromotionService {
     private final PromotionRepository promotionRepository;
 
     public List<Promotion> getAllPromotions() {
-        List<Promotion> promotions = promotionRepository.findAllByOrderByNomDesc();
+        List<Promotion> promotions = promotionRepository.findAllByOrderByTitreDesc();
         if (promotions.isEmpty()) {
             throw new DatabaseEmptyException();
         }
@@ -44,7 +44,7 @@ public class PromotionService {
     }
 
     public List<Promotion> getAllPromotionsByProductName(String name) {
-        List<Promotion> promotions = promotionRepository.findAllByProduit_NomOrderByNomDesc(name);
+        List<Promotion> promotions = promotionRepository.findAllByProduit_NomOrderByTitreDesc(name);
         if (promotions.isEmpty()) {
             throw new DatabaseEmptyException();
         }

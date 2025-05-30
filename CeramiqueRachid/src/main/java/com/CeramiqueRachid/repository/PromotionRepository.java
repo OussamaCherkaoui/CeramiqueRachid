@@ -10,9 +10,9 @@ import java.util.List;
 
 @Repository
 public interface PromotionRepository extends JpaRepository<Promotion, Long> {
-    List<Promotion> findAllByOrderByNomDesc();
+    List<Promotion> findAllByOrderByTitreDesc();
 
-    List<Promotion> findAllByProduit_NomOrderByNomDesc(String name);
+    List<Promotion> findAllByProduit_NomOrderByTitreDesc(String name);
 
     @Query(value = "SELECT Count(*) " +
             "FROM Promotion p where current_date between" +

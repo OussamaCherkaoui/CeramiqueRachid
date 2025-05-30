@@ -52,7 +52,7 @@ public class PromotionController {
         }
     }
 
-    @GetMapping("/getAll/{name]")
+    @GetMapping("/getAll/{name}")
     public ResponseEntity<?> getAllByProductName(@PathVariable("name") String name) {
         try {
             List<Promotion> promotions = promotionService.getAllPromotionsByProductName(name);

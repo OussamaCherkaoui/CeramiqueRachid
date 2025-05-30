@@ -18,5 +18,5 @@ public interface CommandeRepository extends JpaRepository<Commande, Long> {
 
     List<Commande> findAllByStatutIsTrueOrderByDateCommandeDesc();
 
-    List<Commande> findAllByDateCommande();
+    List<Commande> findAllByDateCommande(LocalDate dateCommande);
 }
