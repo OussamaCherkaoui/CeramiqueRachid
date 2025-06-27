@@ -21,6 +21,7 @@ public class AdminService implements UserDetailsService {
 
     public Admin saveAdmin(Admin admin)
     {
+        admin.setId(null);
         return adminRepository.save(admin);
     }
 
@@ -62,7 +63,6 @@ public class AdminService implements UserDetailsService {
         }
         return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(), user.getAuthorities());
     }
-
 
     public Long getCountAdminRegistred() {
         return adminRepository.count();

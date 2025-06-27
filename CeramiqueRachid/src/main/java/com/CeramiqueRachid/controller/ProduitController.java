@@ -52,6 +52,15 @@ public class ProduitController {
         }
     }
 
+    @GetMapping("/getAllByName/{name}")
+    public ResponseEntity<?> getAllByName(@PathVariable("name") String name) {
+        try {
+            List<Produit> produits = produitService.getAllProduitsByName(name);
+            return ResponseEntity.ok(produits);
+        } catch (DatabaseEmptyException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        }
+    }
 
 
     @PostMapping("/save")

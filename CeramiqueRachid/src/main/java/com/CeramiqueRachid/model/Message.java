@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity
@@ -26,12 +27,18 @@ public class Message {
     @Column
     private String message;
     @Column
-    private LocalDateTime dateEnvoi;
+    private LocalDate dateEnvoi;
     @Column
-    private LocalDateTime dateReponse;
+    private LocalDate dateReponse;
     @Column
     private Boolean estRepondue;
     @ManyToOne
     @JoinColumn(name = "idAdmin")
     private Admin admin;
+
+    @Override
+    public String toString() {
+        return this.id + " " + this.nomEtPrenom + " " + this.telephone + " " + this.email+ " " + this.message + " " + this.dateEnvoi + " " + this.dateReponse ;
+    }
+
 }

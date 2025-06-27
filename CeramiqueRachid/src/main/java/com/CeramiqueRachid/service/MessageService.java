@@ -22,16 +22,21 @@ public class MessageService {
     private final AdminService adminService;
 
     public Message saveMessage(Message message) {
-        message.setDateEnvoi(LocalDateTime.now());
+        message.setId(null);
+        message.setDateEnvoi(LocalDate.now());
         message.setEstRepondue(false);
-        return messageRepository.save(message);
+        message.setAdmin(null);
+        System.out.println(message.toString());
+        Message message1 = messageRepository.save(message);
+        System.out.println(message1);
+        return messageRepository.save(message1);
     }
 
     public Message repondueMessage(Long idMessage,Long idAdmin) {
         Message message = messageRepository.findById(idMessage).orElseThrow();
         message.setEstRepondue(true);
         message.setAdmin(adminService.getUserById(idAdmin));
-        message.setDateReponse(LocalDateTime.now());
+        message.setDateReponse(LocalDate.now());
         return messageRepository.save(message);
     }
 

@@ -64,4 +64,12 @@ public class ProduitService {
         }
         return produits;
     }
+
+    public List<Produit> getAllProduitsByName(String name) {
+        List<Produit> produits = produitRepository.getAllByNom(name);
+        if (produits.isEmpty()) {
+            throw new DatabaseEmptyException();
+        }
+        return produits;
+    }
 }

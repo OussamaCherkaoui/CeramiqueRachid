@@ -13,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
@@ -32,6 +33,7 @@ public class MessageController {
     public ResponseEntity<?> update(@PathVariable Long idMessage,@PathVariable Long idAdmin ){
         return ResponseEntity.status(HttpStatus.OK).body(messageService.repondueMessage(idMessage,idAdmin));
     }
+
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<?> delete(@PathVariable("id") Long id) {
         try {
@@ -52,8 +54,8 @@ public class MessageController {
         }
     }
 
-    @GetMapping("/getAllMessageByDate")
-    public ResponseEntity<?> getAllMessageByDate(LocalDate date) {
+    @GetMapping("/getAllMessageByDate/{date}")
+    public ResponseEntity<?> getAllMessageByDate(@PathVariable LocalDate date) {
         try {
             List<Message> messages = messageService.getAllMessageByDate(date);
             return ResponseEntity.ok(messages);
@@ -79,7 +81,7 @@ public class MessageController {
             List<Message> messages = messageService.getAllMessageNotReply();
             return ResponseEntity.ok(messages);
         } catch (DatabaseEmptyException e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+            return ResponseEntity.ok(ResponseEntity.ofNullable(null));
         }
     }
 

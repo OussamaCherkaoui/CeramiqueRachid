@@ -16,4 +16,6 @@ public interface ProduitRepository extends JpaRepository<Produit, Long> {
     List<Produit> findAllByCategorie_NomOrderByNomDesc(String name);
 
     List<Produit> findAllByQuantiteLessThan(Long number);
+
+    List<Produit> getAllByNom(String name);
 }
