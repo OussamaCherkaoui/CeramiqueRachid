@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
@@ -29,6 +30,7 @@ public class SecurityConfig {
     @Autowired
     private AdminService adminService;
 
+
     @Autowired
     private JwtUtil jwtUtil;
 
@@ -46,7 +48,7 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(req -> req
-                        .requestMatchers( "/admin/register/**").permitAll()
+                        .requestMatchers("/admin/register/**","/admin/login/**","/message/save/**").permitAll()
                         .anyRequest().authenticated()
                 )
                 .sessionManagement(session -> session
