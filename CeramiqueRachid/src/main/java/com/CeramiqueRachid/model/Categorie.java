@@ -19,4 +19,6 @@ public class Categorie {
     private String nom;
     @Column
     private String description;
+    @Column
+    private String image;
 }

@@ -19,4 +19,5 @@ public interface PromotionRepository extends JpaRepository<Promotion, Long> {
             " p.dateDebut and p.dateFin")
     Long countPromotionActive();
 
+    void deleteAllByProduit_Id(Long produitId);
 }

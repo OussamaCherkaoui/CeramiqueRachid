@@ -30,6 +30,7 @@ public class PromotionService {
     }
 
     public Promotion savePromotion(Promotion promotion) {
+        promotion.setId(null);
         return promotionRepository.save(promotion);
     }
 

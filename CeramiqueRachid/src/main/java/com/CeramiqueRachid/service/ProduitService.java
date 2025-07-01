@@ -6,6 +6,7 @@ import com.CeramiqueRachid.exception.ProduitNotFoundException;
 import com.CeramiqueRachid.model.Categorie;
 import com.CeramiqueRachid.model.Produit;
 import com.CeramiqueRachid.repository.ProduitRepository;
+import com.CeramiqueRachid.repository.PromotionRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,6 +19,7 @@ import java.util.List;
 public class ProduitService {
 
     private final ProduitRepository produitRepository;
+    private final PromotionRepository promotionRepository;
 
     public List<Produit> getAllProduits() {
         List<Produit> produits = produitRepository.findAllByOrderByNomDesc();
@@ -36,6 +38,7 @@ public class ProduitService {
     }
 
     public Produit saveProduit(Produit produit) {
+        produit.setId(null);
         return produitRepository.save(produit);
     }
 
@@ -45,6 +48,7 @@ public class ProduitService {
 
     public Produit deleteProduit(Long id) throws ProduitNotFoundException {
         Produit produit = produitRepository.findById(id).orElseThrow(ProduitNotFoundException::new);
+        promotionRepository.deleteAllByProduit_Id(produit.getId());
         produitRepository.delete(produit);
         return produit;
     }

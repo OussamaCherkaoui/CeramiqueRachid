@@ -11,7 +11,11 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 
 @RestController
@@ -64,8 +68,41 @@ public class ProduitController {
 
 
     @PostMapping("/save")
-    public ResponseEntity<?> save(@RequestBody Produit produit ){
-        return ResponseEntity.status(HttpStatus.CREATED).body(produitService.saveProduit(produit));
+    public ResponseEntity<?> save(@RequestParam("nom") String nom,
+                                  @RequestParam("description") String description,
+                                  @RequestParam("prix") String prix,
+                                  @RequestParam("quantite") Long quantite,
+                                  @RequestParam("categorieId") Long categorieId,
+                                  @RequestParam(value = "image", required = false) MultipartFile imageFile){
+        try {
+            Produit produit = new Produit();
+            produit.setNom(nom);
+            produit.setDescription(description);
+            produit.setPrix(prix);
+            produit.setQuantite(quantite);
+
+            // Trouver la catégorie
+            Categorie cat = new Categorie();
+            cat.setId(categorieId);
+            produit.setCategorie(cat);
+
+            if (imageFile != null && !imageFile.isEmpty()) {
+                String fileName = System.currentTimeMillis() + "_" + imageFile.getOriginalFilename();
+                String uploadDir = System.getProperty("java.io.tmpdir") + "/ceramique/uploads/";
+                Files.createDirectories(Paths.get(uploadDir));
+
+                Path filePath = Paths.get(uploadDir + fileName);
+                Files.write(filePath, imageFile.getBytes());
+
+                produit.setImage("/images/" + fileName);
+            }
+
+            Produit saved = produitService.saveProduit(produit);
+            return ResponseEntity.status(HttpStatus.CREATED).body(saved);
+
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Erreur: " + e.getMessage());
+        }
     }
 
     @PutMapping("/update")
